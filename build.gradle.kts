@@ -3,6 +3,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "4.0.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.sonarqube") version "7.2.0.6526"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -20,6 +21,15 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
+sonar {
+    properties {
+        property("sonar.projectKey", "A-Evan-Haryo-Widodo-2406435824_Modul-2-CI-CD-DevOps")
+        property("sonar.organization", "a-evan-haryo-widodo-2406435824")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
 
 configurations {
     compileOnly {
