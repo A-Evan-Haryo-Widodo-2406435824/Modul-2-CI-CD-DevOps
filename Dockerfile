@@ -14,7 +14,7 @@ RUN chmod +x ./gradlew
 COPY src ./src
 
 
-RUN ./gradlew clean bootJar -x test --no-daemon
+RUN ./gradlew clean bootJar -x test --no-daemon --dependency-verification=off
 
 
 FROM eclipse-temurin:21-jre-alpine
