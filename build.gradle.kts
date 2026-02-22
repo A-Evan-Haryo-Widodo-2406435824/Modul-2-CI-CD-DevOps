@@ -85,6 +85,11 @@ tasks.test{
 
 tasks.jacocoTestReport{
     dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(true)
+    }
 }
 
 tasks.withType<Test>().configureEach {
