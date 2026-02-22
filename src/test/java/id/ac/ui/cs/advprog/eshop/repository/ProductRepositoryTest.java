@@ -119,9 +119,50 @@ class ProductRepositoryTest {
 
     @Test
     void testDeleteProduct_Failed_NotFound(){
-        Boolean result = productRepository.delete("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("sabun biore");
+        product.setProductQuantity(10);
+        productRepository.create(product);
+        Boolean result = productRepository.delete("ac558e9f-1c39-460e-8860-71af6af63bd6");
         assertFalse(result);
     }
+
+    @Test
+    void testFindByIdFailed(){
+        Product product = new Product();
+        product.setProductId("bab96a53-6f22-4a52-bb13-0b59890352c1");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product result = productRepository.findById("acb96a53-6f22-4a52-bb13-0b59890352c1");
+        assertNull(result);
+    }
+
+
+    @Test
+    void testFindByIdForMoreThanOneProductsFailed(){
+        Product product_1 = new Product();
+        product_1.setProductId("bab96a53-6f22-4a52-bb13-0b59890352c1");
+        product_1.setProductName("Sampo Cap Bambang");
+        product_1.setProductQuantity(100);
+
+        Product product_2 = new Product();
+        product_2.setProductId("acb96a53-6f22-4a52-bb13-0b59890352c1");
+        product_2.setProductName("Sampo Cap Dodo");
+        product_2.setProductQuantity(200);
+
+
+        productRepository.create(product_1);
+        productRepository.create(product_2);
+
+        Product result = productRepository.findById("acb96a53-6f22-4a52-bb13-0b59890352c1");
+        assertNotNull(result);
+        assertEquals(product_2.getProductId(), result.getProductId());
+    }
+
+
 
 
 }
