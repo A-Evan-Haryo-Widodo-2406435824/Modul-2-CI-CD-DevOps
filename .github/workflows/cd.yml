@@ -1,0 +1,22 @@
+name: Continuous Deployment
+on:
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    types:
+      - completed
+    branches:
+      - "main"
+jobs:
+  Continuous-Deployment:
+    runs-on: ubuntu-22.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Install Koyeb CLI
+        run: curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/koyeb/koyeb-cli/master/install.sh | sh
+
+      - name: Trigger Koyeb Redeploy
+        env:
+          KOYEB_TOKEN: ${{ secrets.KOYEB_TOKEN }}
+        run: |
+          koyeb service redeploy selective-carlie/modul-2-ci-cd-devops
+          
