@@ -13,11 +13,18 @@ jobs:
     steps:
       - name: Install Koyeb CLI
         run: |
+          set -e
           curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/koyeb/koyeb-cli/master/install.sh | sh
+          echo "$HOME/.koyeb/bin" >> $GITHUB_PATH
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Verify Koyeb CLI
+        run: koyeb version
+
       - name: Trigger Koyeb Redeploy
         env:
           KOYEB_TOKEN: ${{ secrets.KOYEB_TOKEN }}
         run: |
+          koyeb auth login --token "$KOYEB_TOKEN"
           koyeb service redeploy selective-carlie/modul-2-ci-cd-devops
           
