@@ -25,6 +25,5 @@ jobs:
         env:
           KOYEB_TOKEN: ${{ secrets.KOYEB_TOKEN }}
         run: |
-          koyeb auth login --token "$KOYEB_TOKEN"
           koyeb service redeploy selective-carlie/modul-2-ci-cd-devops
           
