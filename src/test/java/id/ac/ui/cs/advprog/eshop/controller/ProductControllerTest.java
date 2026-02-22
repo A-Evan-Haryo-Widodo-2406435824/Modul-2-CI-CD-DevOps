@@ -93,7 +93,7 @@ class ProductControllerTest {
         String viewName = productController.deleteProduct(product.getProductId());
 
         verify(productService).delete(product.getProductId());
-        assertEquals("redirect:../list", viewName);
+        assertEquals("redirect:/product/list", viewName);
     }
 
 }
