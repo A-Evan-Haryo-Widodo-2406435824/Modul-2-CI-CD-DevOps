@@ -7,7 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class HomePageControllerTest {
+class HomePageControllerTest {
 
     @InjectMocks
     private HomePageController homePageController;
