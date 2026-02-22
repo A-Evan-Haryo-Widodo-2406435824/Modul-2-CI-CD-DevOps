@@ -15,7 +15,8 @@ on:
     branches: [ "main", "ci-cd" ]
 
 # Declare default permissions as read only.
-permissions: read
+permissions:
+  contents: read
 
 jobs:
   analysis:
