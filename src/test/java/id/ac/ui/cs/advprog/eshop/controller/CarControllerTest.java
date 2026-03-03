@@ -46,7 +46,7 @@ class CarControllerTest {
     void testCreateCarPage() {
         String viewName = carController.createCarPage(model);
         verify(model).addAttribute(eq("car"), any(Car.class));
-        assertEquals("createCar", viewName);
+        assertEquals("CreateCar", viewName);
     }
 
     @Test
@@ -67,7 +67,7 @@ class CarControllerTest {
         verify(carService).findAll();
         verify(model).addAttribute("cars", carList);
 
-        assertEquals("carList", viewName);
+        assertEquals("CarList", viewName);
     }
 
     @Test
@@ -79,7 +79,7 @@ class CarControllerTest {
         verify(carService).findById(car.getCarId());
         verify(model).addAttribute("car", car);
 
-        assertEquals("editCar", viewName);
+        assertEquals("EditCar", viewName);
     }
 
     @Test
