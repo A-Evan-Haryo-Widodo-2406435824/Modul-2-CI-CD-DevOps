@@ -1,3 +1,39 @@
+# Module-3
+## Solid Principles I applied
+- **Single Responsibility Principle (SRP)**
+  - **Issue awal:** file ProductController.java mengatasi dua controller berbeda, yakni ProductController dan CarController sehingga ada dua tanggung jawab dalam satu file.
+  - **How to fix:** saya memisahkan CarController ke file baru, yakni CarController.java sehingga satu file Controller hanya bertanggung jawab ke satu Controller saja.
+- **Open/Closed Principle (OCP)**
+  - **Issue awal:** Car Repository melakukan metode penyimpanan secara langsung dengan in-memory atau dalam kata lain data disimpan di array secara langsung. Hal ini tidak best practice ketika nantinya program perlu melakukan penyimpanan di database, seperti mySQL atau lainnya.
+  - **How to fix:** saya membuat interface CarRepository yang berisi method CRUD, seperti sebelumnya (create, findById, findAll, update, delete) dan membuat class baru, yakni InMemoryCarRepository yang mengimplementasikan interface CarRepository
+- **Liskov Substitution Principle (LSP)**
+  - **Issue awal:** CarController melakukan ekstensi pada ProductController, tetapi keduanya tidak saling berkaitan sehingga ekstensi tidak memberikan manfaat apa pun
+  - **How to fix:** saya menghapus ekstensi yang dilakukan CarController pada ProductController dan juga constructor yang mendefinisikan ProductService sehingga keduanya berdiri secara independen
+- **Dependency Inversion Principle (DIP)**
+  - **Issue awal:** pada CarController, CarServiceImpl langsung di-autowired. Hal tersebut melanggar konsep DIP karena high level module (controller) tidak boleh bergantung langsung pada low level module (concrete implementation dari Car Service)
+  - **How to fix:** saya melakukan pergantian autowired, yakni  ke CarServicenya atau bukan ke implementasi dari CarServicenya sehingga konsep DIP terpenuhi.
+
+## Solid Principles that is already applied
+- **Interface Segregation Principle (ISP)**
+  - ISP sudah diimplementasikan pada CarService.java yang mana method-method diimplementasikan secara keseluruhan oleh CarServiceImpl.java tanpa adanya satu method pun yang tidak digunakan. Dalam kata lain, contract method yang didefinisikan di CarService.java sudah kohesif dan tidak membuat class yang mengimplementasikannya secara terpaksa harus membuat method tersebut tanpa digunakan.
+  - ISP juga sudah saya implementasikan pada pembuatan interface CarRepository juga yang mana method-method CRUD yang didefinisikan sudah kohesif serta berguna secara keseluruhan pada class yang mengimplementasikannya.
+
+## Advantages of applying SOLID Principles
+- **Single Responsibility Principle (SRP):** mempermudah maintanability suatu kelas ataupun method. Sebagai contoh, pemisahan antara controller Product dan Car membuat pengembangan ke depan lebih mudah dilakukan karena tanggung jawab controller sudah berdiri pada satu file yang berbeda.
+- **Open/Closed Principle (OCP):** meningkatkan fleksibilitas ketika ada penambahan fitur. Sebagai contoh, pembuatan interface CarRepository merupakan langkah awal untuk mendefinisikan kontrak yang dilakukan pada komponen repository yang berhubungan pada Car. Lalu, ketika pengembangan hanya membutuhkan penyimpanan pada In-Memory, maka pengembang dapat melakukan ekstensi pada interface tersebut dan applying methodsnya tanpa mengubah struktur car repository dari awal. Begitu juga, ketika ada penambahan fitur penyimpanan pada media penyimpanan lainnya, seperti database.
+- **Liskov Substitution Principle (LSP):** mencegah behaviour yang tidak diperlukan pada inheritance. Sebagai contoh, CarController awalnya melakukan ekstensi pada ProductController yang sebenarnya CarController tidak merepresentasikan apapun dari ProductController sehingga adanya inheritance ini justru hanya mewarisi methods dari ProductController yang tidak digunakan oleh CarController.
+- **Interface Segregation Principle (ISP):** menjaga kontrak method tetap spesifik. Sebagai contoh, pembuatan interface CarService sudah menerapkan prinsip ini karena pada implementasinya di CarServiceImpl.java, setiap method diimplementasikan dan digunakan secara utuh sehingga interface sudah mendefinisikan method yang sesuai dengan kebutuhan class yang mengimplementasikannya.
+- **Dependency Inversion Principle (DIP):** membuat kode menjadi loosely coupled. Sebagai contoh, pada CarController, injection pada CarService membuat controller tidak perlu memikirkan implementasi service apa yang digunakan di belakang layar sehingga nantinya proses, seperti unit-testing lebih mudah dilakukan karena kita terfokus pada abstraction classnya saja.
+
+## Disadvantages of not applying SOLID Principles
+- **Single Responsibility Principle (SRP):** kesulitan dalam pengembangan. Sebagai contoh, jika  controller Product dan Car tidak dipisah, maka proses pengembangan sangat sulit karena kode semakin panjang dan urusan pada satu file sangat banyak.
+- **Open/Closed Principle (OCP):** rapuh terhadap fitur baru. Sebagai contoh, jika repository car secara exact menerapkan penyimpanan in-memory, maka ketika ada fitur baru, seperti penyimpanan pada database, struktur kode harus dimodifikasi semua, baik secara constructor maupun methodsnya
+- **Liskov Substitution Principle (LSP):** dapat menimbulkan error. Sebagai contoh, CarController yang tetap melakukan ekstensi pada ProductController akan memiliki kemungkinan adanya error karena jika ProductController menambahkan constructor lain, CarController wajib mengimplementasikannya juga. Jika tidak, maka akan error
+- **Interface Segregation Principle (ISP):** class akan memiliki method yang sebenarnya tidak digunakan. Sebagai contoh, jika semisalnya ada kontrak method "int sizeBattery()" pada CarService, padahal tidak semua Car merupakan mobil listrik, maka yang ada kita harus mengimplementasikan method tersebut, meskipun method tidak digunakan dengan baik.
+- **Dependency Inversion Principle (DIP):** sulit diuji dan diganti. Sebagai contoh, pada injection CarServiceImpl, ketika ternyata yang mengimplementasikan Car Service itu tidak hanya CarServiceImpl, tapi ada beberapa class dan service itu disesuaikan dengan lingkungan production/developmentnya, maka jika kita langsung inject kepada class implementationnya, controller harus berulang kali mengganti service yang digunakan.
+
+
+
 # Module-2
 ## Link-Deployment
 - https://selective-carlie-evanhwzorgs-568d8cef.koyeb.app/
